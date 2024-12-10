@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Registrasi Mahasiswa</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .form-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin: 10px 0 5px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #4cae4c;
+      }
+
+      .autocomplete-suggestions {
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-height: 150px;
+        overflow-y: auto;
+        z-index: 1000;
+      }
+
+      .autocomplete-suggestions div {
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .autocomplete-suggestions div:hover {
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h2>Form Registrasi</h2>
+      <form>
+        <label for="nama">Nama Mahasiswa:</label>
+        <div style="position: relative">
+          <input
+            type="text"
+            id="nama"
+            name="nama"
+            placeholder="Masukkan nama mahasiswa"
+            autocomplete="off"
+          />
+          <div id="suggestions" class="autocomplete-suggestions"></div>
+        </div>
+
+        <label for="nim">NIM:</label>
+        <input type="text" id="nim" name="nim" placeholder="Masukkan NIM" />
+
+        <label for="mata_kuliah">Mata Kuliah:</label>
+        <input
+          type="text"
+          id="mata_kuliah"
+          name="mata_kuliah"
+          placeholder="Masukkan mata kuliah"
+        />
+
+        <label for="dosen">Dosen:</label>
+        <input
+          type="text"
+          id="dosen"
+          name="dosen"
+          placeholder="Masukkan nama dosen"
+        />
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <script>
+      // Daftar nama mahasiswa
+      const namaMahasiswa = [
+        "Ahmad Fauzi",
+        "Budi Santoso",
+        "Citra Dewi",
+        "Dian Purnama",
+        "Eka Putri",
+        "Fitriani",
+        "Gilang Saputra",
+        "Hendra Wijaya",
+        "Indah Permatasari",
+        "Joko Susanto",
+        "Kurniawan",
+        "Lestari",
+        "Maria Ulfa",
+        "Nanda Pratama",
+        "Oki Ramdani",
+        "Putra Nugraha",
+        "Qori Ismail",
+        "Rian Firmansyah",
+        "Siti Aminah",
+        "Taufik Hidayat",
+        "Umi Salamah",
+        "Vivi Wijaya",
+        "Wahyu Prasetyo",
+        "Yusuf Rizki",
+        "Zahra Maulida",
+      ];
+
+      const inputNama = document.getElementById("nama");
+      const suggestionsContainer = document.getElementById("suggestions");
+
+      function showSuggestions(value) {
+        const filteredNames = namaMahasiswa.filter((name) =>
+          name.toLowerCase().startsWith(value.toLowerCase())
+        );
+
+        suggestionsContainer.innerHTML = "";
+
+        if (filteredNames.length > 0 && value) {
+          suggestionsContainer.style.display = "block";
+
+          filteredNames.forEach((name) => {
+            const suggestion = document.createElement("div");
+            suggestion.textContent = name;
+            suggestion.addEventListener("click", () => {
+              inputNama.value = name;
+              suggestionsContainer.innerHTML = "";
+              suggestionsContainer.style.display = "none";
+            });
+            suggestionsContainer.appendChild(suggestion);
+          });
+        } else {
+          suggestionsContainer.style.display = "none";
+        }
+      }
+
+      inputNama.addEventListener("input", () => {
+        const value = inputNama.value;
+        showSuggestions(value);
+      });
+
+      document.addEventListener("click", (e) => {
+        if (e.target !== inputNama) {
+          suggestionsContainer.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
